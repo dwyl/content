@@ -6,10 +6,17 @@ defmodule ContentTest do
 
   def dummy(conn, _params) do
     IO.inspect(conn.halted, label: "conn.halted")
+    # IO.inspect(conn, label: "conn:9")
+    conn
+    |> assign(:dummy, "hello")
   end
 
-  def log_headers(conn, _params) do
-    IO.inspect(conn.req_headers, label: "conn.req_headers")
+  def assign_accept_header(conn, _params) do
+    # IO.inspect(conn.req_headers, label: "conn.req_headers")
+    # IO.inspect(conn, label: "conn:16")
+    conn
+    |> assign(:accept, Content.get_accept_header(conn))
+    # |> IO.inspect(label: "conn:19")
   end
 
 
@@ -23,8 +30,9 @@ defmodule ContentTest do
     conn =
       conn(:get, "/admin")
       |> put_req_header("accept", "html")
-      |> Content.call(%{ html_plugs: [&dummy/2, &log_headers/2] })
+      |> Content.call(%{ html_plugs: [&dummy/2, &assign_accept_header/2] })
 
+    assert conn.assigns == %{accept: "html", dummy: "hello"}
     assert conn.status == nil
   end
 

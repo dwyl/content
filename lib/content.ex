@@ -27,17 +27,13 @@ defmodule Content do
     if get_accept_header(conn) =~ "json" do
       conn
     else
-      IO.inspect(options, label: "options")
+      # IO.inspect(options, label: "options")
       # if accept header not "json" then assume "html"
-      # is_function(self) -> "function"
-      for f <- options.html_plugs do
-        IO.inspect(f, label: "f")
-        IO.inspect(is_function(f), label: "is_function(f)")
-        # https://stackoverflow.com/questions/22562192/function-as-a-parameter
-        f.(conn, [])
-      end
-
-      conn
+      # invoke each function in the list of html_plugs
+      # and pass the conn as accumulator through each iteration
+      # return the conn with all html_plugs applied to it.
+      # see: https://hexdocs.pm/elixir/List.html#foldl/3
+      List.foldl(options.html_plugs, conn, fn f, conn -> f.(conn, []) end)
     end
   end
 
