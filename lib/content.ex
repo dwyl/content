@@ -25,10 +25,10 @@ defmodule Content do
   """
   def call(conn, options) do
     if get_accept_header(conn) =~ "json" do
+      # for json requests return the conn unmodified:
       conn
     else
-      # IO.inspect(options, label: "options")
-      # if accept header not "json" then assume "html"
+      # if accept header not "json" then assume "html" (the default)
       # invoke each function in the list of html_plugs
       # and pass the conn as accumulator through each iteration
       # return the conn with all html_plugs applied to it.
@@ -49,9 +49,5 @@ defmodule Content do
       nil ->
         "text/html"
     end
-  end
-
-  def hello do
-    :world
   end
 end

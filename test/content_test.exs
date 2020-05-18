@@ -36,7 +36,4 @@ defmodule ContentTest do
     assert conn.status == nil
   end
 
-  test "greets the world" do
-    assert Content.hello() == :world
-  end
 end
