@@ -33,7 +33,13 @@ defmodule Content do
       # and pass the conn as accumulator through each iteration
       # return the conn with all html_plugs applied to it.
       # see: https://hexdocs.pm/elixir/List.html#foldl/3
-      List.foldl(options.html_plugs, conn, fn f, conn -> f.(conn, []) end)
+      List.foldl(options.html_plugs, conn, fn f, conn ->
+        if (is_function(f)) do
+          f.(conn, [])
+        else
+          conn
+        end
+      end)
     end
   end
 
@@ -48,6 +54,18 @@ defmodule Content do
 
       nil ->
         "text/html"
+    end
+  end
+
+  @doc """
+  `reply/5` gets the "accept" header from req_headers.
+  Defaults to "text/html" if no header is set.
+  """
+  def reply(conn, render, template, json, data) do
+    if get_accept_header(conn) =~ "json" do
+      json.(conn, data)
+    else
+      render.(conn, template, data: data)
     end
   end
 end

@@ -22,7 +22,6 @@ defmodule ContentTest do
 
   test "Plug init function doesn't change params" do
     assert Content.init(%{}) == %{}
-    IO.inspect("hello")
   end
 
 
