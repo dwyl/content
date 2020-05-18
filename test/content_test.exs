@@ -8,6 +8,10 @@ defmodule ContentTest do
     IO.inspect(conn.halted, label: "conn.halted")
   end
 
+  def log_headers(conn, _params) do
+    IO.inspect(conn.req_headers, label: "conn.req_headers")
+  end
+
 
   test "Plug init function doesn't change params" do
     assert Content.init(%{}) == %{}
@@ -15,15 +19,13 @@ defmodule ContentTest do
   end
 
 
-  test "invoke call/2 with accept=json" do
+  test "invoke call/2 with accept=html" do
     conn =
       conn(:get, "/admin")
       |> put_req_header("accept", "html")
-      |> Content.call(%{ plugs: [&dummy/2] })
+      |> Content.call(%{ html_plugs: [&dummy/2, &log_headers/2] })
 
-    # IO.inspect(conn, label: "conn:21")
-    # redirect when auth fails
-    # assert conn.status == 302
+    assert conn.status == nil
   end
 
   test "greets the world" do

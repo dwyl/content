@@ -30,11 +30,11 @@ defmodule Content do
       IO.inspect(options, label: "options")
       # if accept header not "json" then assume "html"
       # is_function(self) -> "function"
-      for f <- options.plugs do
+      for f <- options.html_plugs do
         IO.inspect(f, label: "f")
         IO.inspect(is_function(f), label: "is_function(f)")
         # https://stackoverflow.com/questions/22562192/function-as-a-parameter
-        conn = f.(conn, [])
+        f.(conn, [])
       end
 
       conn
