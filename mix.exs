@@ -28,7 +28,8 @@ defmodule Content.MixProject do
       {:excoveralls, "~> 0.12.3", only: :test},
 
       # See: github.com/dwyl/auth_plug_example
-      # {:plug_cowboy, "~> 2.1", only: [:dev, :test]},
+      {:jason, "~> 1.2.0", only: [:dev, :test]},
+      # {:phoenix, "~> 1.5.1", only: [:dev, :test]},
 
       # For publishing Hex.docs:
       {:ex_doc, "~> 0.21.3", only: :dev}

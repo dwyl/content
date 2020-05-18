@@ -5,12 +5,13 @@ defmodule ContentTest do
 
 
   def dummy(conn, _params) do
-    IO.inspect(conn.halted, label: "conn.halted")
+    # IO.inspect(conn.halted, label: "conn.halted")
     # IO.inspect(conn, label: "conn:9")
     conn
     |> assign(:dummy, "hello")
   end
 
+  # another dummy function for testing call/2 html_plugs
   def assign_accept_header(conn, _params) do
     # IO.inspect(conn.req_headers, label: "conn.req_headers")
     # IO.inspect(conn, label: "conn:16")
@@ -27,12 +28,45 @@ defmodule ContentTest do
 
   test "invoke call/2 with accept=html" do
     conn =
-      conn(:get, "/admin")
+      conn(:get, "/")
       |> put_req_header("accept", "html")
       |> Content.call(%{ html_plugs: [&dummy/2, &assign_accept_header/2] })
 
     assert conn.assigns == %{accept: "html", dummy: "hello"}
     assert conn.status == nil
+  end
+
+  # mock Phoenix json function:
+  def render_json(conn, data) do
+    {:ok, json} = Jason.encode(data)
+    Map.put(conn, :resp_body, json)
+  end
+
+  def render_html(conn, template, data) do
+    str = "<html> #{template} " <> Kernel.inspect(data) <> "</html>"
+    Map.put(conn, :resp_body, str)
+    # conn
+  end
+
+  test "reply/5 should render json if accept header is json" do
+    data = %{"hello" => "world"}
+    conn =
+      conn(:get, "/")
+      |> put_req_header("accept", "application/json")
+      |> Content.reply(&render_html/3, "my_template", &render_json/2, data)
+      # |> IO.inspect(label: "conn:54")
+
+    {:ok, json} = Jason.decode(conn.resp_body)
+    assert json == data
+  end
+
+  test "reply/5 should render HTML if accept header is html" do
+    conn =
+      conn(:get, "/")
+      |> put_req_header("accept", "text/html")
+      |> Content.reply(&render_html/3, "my_template", &render_json/2, "data")
+
+    assert conn.resp_body == "<html> my_template [data: \"data\"]</html>"
   end
 
 end

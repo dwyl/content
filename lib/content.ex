@@ -17,7 +17,7 @@ defmodule Content do
   def init(options) do
     # return options unmodified
     options
-    |> IO.inspect(label: "options:20")
+    # |> IO.inspect(label: "options:20")
   end
 
   @doc """
