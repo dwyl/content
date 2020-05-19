@@ -68,13 +68,14 @@ please open an
 
 # How?
 
-In _less_ than 5 minutes you will have
-content negotiation enabled in your Phoenix App
-and can get back to building your app.
+In _less_ than ***2 minutes*** and 3 easy steps
+you will have content negotiation enabled
+in your Phoenix App
+and can get back to building your app!
 
 
-
-## Installation
+<br />
+## 1. Install
 
 Add `content` to your list of dependencies in `mix.exs`:
 
@@ -88,10 +89,12 @@ end
 
 Then run `mix deps.get`.
 
-## Add the `Content` Plug to your `router.ex`
+<br />
+## 2. Add the `Content` Plug to your `router.ex`
 
 Open the `router.ex` file in your Phoenix App.
-Locate the `pipeline :browser do`
+Locate the `pipeline :browser do` section.
+And replace it:
 
 Before:
 
@@ -119,6 +122,9 @@ pipeline :any do
 end
 ```
 
+Pass the plugs you want to run for `html`
+as `html_plugs` (_in the order you want to execute them_).
+
 > **Note**: the `&` and `/2` additions to the names of plugs
 are the `Elixir` way of passing functions by reference. <br />
 The `&` means "capture" and the `/2` is the
@@ -126,7 +132,7 @@ The `&` means "capture" and the `/2` is the
 of the function we are passing. <br />
 We would _obviously_ prefer if functions were just variables
 like they are in some other programming languages,
-but this works. <br />
+but this _works_. <br />
 See:
 https://dockyard.com/blog/2016/08/05/understand-capture-operator-in-elixir <br />
 and:
@@ -135,8 +141,8 @@ https://culttt.com/2016/05/09/functions-first-class-citizens-elixir
 Example:
 [`router.ex#L6-L11`](https://github.com/dwyl/phoenix-content-negotiation-tutorial/blob/22501adbbe8159d28b37f39d912519f39346d1bd/lib/app_web/router.ex#L6-L11)
 
-
-## Use the `Content.reply/5` in your Controller
+<br />
+## 3. Use the `Content.reply/5` in your Controller
 
 In your controller(s),
 add the following line to invoke `Content.reply/5` <br />
@@ -185,8 +191,8 @@ If you get stuck at at any point,
 please reference our tutorial:
 [/dwyl/phoenix-content-negotiation-tutorial](https://github.com/dwyl/phoenix-content-negotiation-tutorial#part-2)
 
-
+<br />
 ## Docs?
 
 Documentation can be found at
-[https://hexdocs.pm/content](https://hexdocs.pm/content).
+[https://hexdocs.pm/content](https://hexdocs.pm/content/Content.html).
