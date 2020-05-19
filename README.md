@@ -120,14 +120,15 @@ end
 ```
 
 > **Note**: the `&` and `/2` additions to the names of plugs
-are the `Elixir` way of passing functions by reference.
-The `&` means "capture" and the `/2` is the arity of the function
-we are passing.
+are the `Elixir` way of passing functions by reference. <br />
+The `&` means "capture" and the `/2` is the
+[arity](https://en.wikipedia.org/wiki/Arity)
+of the function we are passing. <br />
 We would _obviously_ prefer if functions were just variables
 like they are in some other programming languages,
-but this works.
+but this works. <br />
 See:
-https://dockyard.com/blog/2016/08/05/understand-capture-operator-in-elixir
+https://dockyard.com/blog/2016/08/05/understand-capture-operator-in-elixir <br />
 and:
 https://culttt.com/2016/05/09/functions-first-class-citizens-elixir
 
@@ -135,7 +136,7 @@ https://culttt.com/2016/05/09/functions-first-class-citizens-elixir
 ## Use the `Content.reply/5` in your Controller
 
 In your controller(s),
-add the following line to invoke `Content.reply/5`
+add the following line to invoke `Content.reply/5` <br />
 which will render `HTML` or `JSON`
 depending on the `accept` header:
 
@@ -182,7 +183,7 @@ please go through our Tutorial:
 https://github.com/dwyl/phoenix-content-negotiation-tutorial
 
 
-## Docs?
+## Docs?
 
 Documentation can be found at
 [https://hexdocs.pm/content](https://hexdocs.pm/content).
