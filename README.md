@@ -9,7 +9,7 @@ so you can render HTML and JSON for the _same_ route.
 [![Build Status](https://img.shields.io/travis/dwyl/content/master.svg?style=flat-square)](https://travis-ci.org/dwyl/content)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/content/master.svg?style=flat-square)](http://codecov.io/github/dwyl/content?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/content/issues)
-<!-- [![HitCount](http://hits.dwyl.io/dwyl/content.svg)](https://github.com/dwyl/content) -->
+[![HitCount](http://hits.dwyl.io/dwyl/content.svg)](https://github.com/dwyl/content)
 
 </div>
 
@@ -88,10 +88,10 @@ end
 
 Then run `mix deps.get`.
 
-## Add the `content` Plug to your `router.ex`
+## Add the `Content` Plug to your `router.ex`
 
 Open the `router.ex` file in your Phoenix App.
-Locate the
+Locate the `pipeline :browser do`
 
 Before:
 
@@ -131,6 +131,9 @@ See:
 https://dockyard.com/blog/2016/08/05/understand-capture-operator-in-elixir <br />
 and:
 https://culttt.com/2016/05/09/functions-first-class-citizens-elixir
+
+Example:
+[`router.ex#L6-L11`](https://github.com/dwyl/phoenix-content-negotiation-tutorial/blob/22501adbbe8159d28b37f39d912519f39346d1bd/lib/app_web/router.ex#L6-L11)
 
 
 ## Use the `Content.reply/5` in your Controller
@@ -179,8 +182,8 @@ end
 ```
 
 If you get stuck at at any point,
-please go through our Tutorial:
-https://github.com/dwyl/phoenix-content-negotiation-tutorial
+please reference our tutorial:
+[/dwyl/phoenix-content-negotiation-tutorial](https://github.com/dwyl/phoenix-content-negotiation-tutorial#part-2)
 
 
 ## Docs?
