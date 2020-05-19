@@ -203,10 +203,9 @@ Documentation can be found at
 
 <br />
 
-## Love it? Want _More_? ⭐
+## Love it? Want _More_? ⭐
 
 If you are _using_ this package in your project,
-we would _love_ to hear from you!
-Please ⭐ the repo on GitHub.
+please ⭐ the repo on GitHub. <br />
 If you have any questions/requests,
 please open an [issue](https://github.com/dwyl/content/issues).
