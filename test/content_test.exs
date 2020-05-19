@@ -25,12 +25,33 @@ defmodule ContentTest do
     assert Content.init(%{}) == %{}
   end
 
+  test "invoke call/2 with accept=json" do
+    conn =
+      conn(:get, "/")
+      |> put_req_header("accept", "application/json")
+      |> Content.call(%{})
+
+    # not much else we can assert here, it just returns the conn unmodified.
+    IO.inspect(conn, label: "conn")
+    assert conn.status == nil
+  end
 
   test "invoke call/2 with accept=html" do
     conn =
       conn(:get, "/")
       |> put_req_header("accept", "html")
       |> Content.call(%{ html_plugs: [&dummy/2, &assign_accept_header/2] })
+
+    assert conn.assigns == %{accept: "html", dummy: "hello"}
+    assert conn.status == nil
+  end
+
+  test "invoke call/2 with accept=html with non-function html_plugs" do
+    conn =
+      conn(:get, "/")
+      |> put_req_header("accept", "html")
+      |> Content.call(%{ html_plugs:
+        [&dummy/2, &assign_accept_header/2, "this is ignored"] })
 
     assert conn.assigns == %{accept: "html", dummy: "hello"}
     assert conn.status == nil
