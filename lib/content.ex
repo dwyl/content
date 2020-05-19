@@ -11,21 +11,25 @@ defmodule Content do
   @doc """
   `init/1` initialises the options passed in and makes them
   available in the lifecycle of the `call/2` invocation (below).
-  We pass in the `auth_url` key/value with the URL of the Auth service
-  to redirect to if session is invalid/expired.
+  When invoking the `Content` plug in a Phoenix router pipeline,
+  we pass in a Map containing a key `html_plugs` with a list of
+  plugs that need to be run when the accept header is "html".
+  See implimentation docs for more detail/clarity.
   """
   def init(options) do
     # return options unmodified
     options
-    # |> IO.inspect(label: "options:20")
   end
 
   @doc """
   `call/2` is invoked to handle each HTTP request which `Content` inspects.
+  If the accept header is "html", execute the `html_plugs` for that request.
+  If the accept header contains "json" return the `conn` unmodified.
   """
   def call(conn, options) do
     if get_accept_header(conn) =~ "json" do
       # for json requests return the conn unmodified:
+      # if we need options.json_plugs in the future, we can add it.
       conn
     else
       # if accept header not "json" then assume "html" (the default)
