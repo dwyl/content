@@ -66,7 +66,7 @@ please open an
 [issue](https://github.com/dwyl/content/issues).
 
 
-# How?
+# How? 💡
 
 In _less_ than ***2 minutes*** and 3 easy steps
 you will have content negotiation enabled
@@ -75,7 +75,8 @@ and can get back to building your app!
 
 
 <br />
-## 1. Install
+
+## 1. Install ⬇️
 
 Add `content` to your list of dependencies in `mix.exs`:
 
@@ -90,7 +91,8 @@ end
 Then run `mix deps.get`.
 
 <br />
-## 2. Add the `Content` Plug to your `router.ex`
+
+## 2. Add the `Content` Plug to your `router.ex` 🔧
 
 Open the `router.ex` file in your Phoenix App.
 Locate the `pipeline :browser do` section.
@@ -142,7 +144,8 @@ Example:
 [`router.ex#L6-L11`](https://github.com/dwyl/phoenix-content-negotiation-tutorial/blob/22501adbbe8159d28b37f39d912519f39346d1bd/lib/app_web/router.ex#L6-L11)
 
 <br />
-## 3. Use the `Content.reply/5` in your Controller
+
+## 3. Use the `Content.reply/5` in your Controller 📣
 
 In your controller(s),
 add the following line to invoke `Content.reply/5` <br />
@@ -192,7 +195,18 @@ please reference our tutorial:
 [/dwyl/phoenix-content-negotiation-tutorial](https://github.com/dwyl/phoenix-content-negotiation-tutorial#part-2)
 
 <br />
-## Docs?
+
+## Docs? 📖
 
 Documentation can be found at
 [https://hexdocs.pm/content](https://hexdocs.pm/content/Content.html).
+
+<br />
+
+## Love it? Want _More_? ⭐
+
+If you are _using_ this package in your project,
+we would _love_ to hear from you!
+Please ⭐ the repo on GitHub.
+If you have any questions/requests,
+please open an [issue](https://github.com/dwyl/content/issues).
