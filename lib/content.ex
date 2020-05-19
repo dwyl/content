@@ -60,6 +60,19 @@ defmodule Content do
   @doc """
   `reply/5` gets the "accept" header from req_headers.
   Defaults to "text/html" if no header is set.
+  The `Content.reply/5` accepts the following 5 argument:
+  1. `conn` - the `Plug.Conn` where we get the `req_headers` from.
+  2. `render/3` - the `Phoenix.Controller.render/3` function,
+    or your own implementation of a render function that
+    takes `conn`, `template` and `data` as it's 3 params.
+  3. `template` - the `.html` template to be rendered
+    if the `accept` header matches `"html"`; e.g: `"index.html"`
+  4. `json/2` - the `Phoenix.Controller.json/2` function
+    that renders `json` data.
+    Or your own implementation that accepts the two params:
+    `conn` and `data` corresponding to the `Plug.Conn`
+    and the `json` data you want to return.
+  5. `data` - the data we want to render as `HTML` or `JSON`.
   """
   def reply(conn, render, template, json, data) do
     if get_accept_header(conn) =~ "json" do
