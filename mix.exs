@@ -41,7 +41,7 @@ defmodule Content.MixProject do
   defp deps do
     [
       # Plug helper functions: github.com/elixir-plug/plug
-      {:plug, "~> 1.10"},
+      {:plug, "~> 1.10", only: [:dev, :test]},
 
       # Track coverage: github.com/parroty/excoveralls
       {:excoveralls, "~> 0.12.3", only: :test},
