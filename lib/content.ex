@@ -3,10 +3,6 @@ defmodule Content do
   `Content` handles Content Negotation in any Elixir/Phoenix App.
   Please see: github.com/dwyl/content for detail.
   """
-  # https://hexdocs.pm/plug/readme.html#the-plug-conn-struct
-  # import Plug.Conn
-  # https://hexdocs.pm/logger/Logger.html
-  # require Logger
 
   @doc """
   `init/1` initialises the options passed in and makes them
@@ -48,7 +44,7 @@ defmodule Content do
   end
 
   @doc """
-  `get_accept_header/2` gets the "accept" header from req_headers.
+  `get_accept_header/1` gets the "accept" header from req_headers.
   Defaults to "text/html" if no header is set.
   """
   def get_accept_header(conn) do
