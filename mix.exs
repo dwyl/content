@@ -7,7 +7,26 @@ defmodule Content.MixProject do
       version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package(),
+      description: "Turnkey Auth Plug lets you protect any route in an Elixir/Phoenix App.",
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
+    ]
+  end
+
+  defp package() do
+    [
+      files: ~w(lib/content.ex LICENSE mix.exs README.md),
+      name: "content",
+      licenses: ["GNU GPL v2.0"],
+      maintainers: ["dwyl"],
+      links: %{"GitHub" => "https://github.com/dwyl/content"}
     ]
   end
 
