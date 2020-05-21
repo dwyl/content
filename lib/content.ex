@@ -1,6 +1,6 @@
 defmodule Content do
   @moduledoc """
-  `Content` handles Content Negotation in any Elixir/Phoenix App.
+  `Content` handles Content Negotiation in any Elixir/Phoenix App.
   Please see: github.com/dwyl/content for detail.
   """
 
@@ -24,17 +24,17 @@ defmodule Content do
   """
   def call(conn, options) do
     if get_accept_header(conn) =~ "json" do
-      # for json requests return the conn unmodified:
-      # if we need options.json_plugs in the future, we can add it.
+      #  for json requests return the conn unmodified:
+      #  if we need options.json_plugs in the future, we can add it.
       conn
     else
-      # if accept header not "json" then assume "html" (the default)
+      #  if accept header not "json" then assume "html" (the default)
       # invoke each function in the list of html_plugs
       # and pass the conn as accumulator through each iteration
-      # return the conn with all html_plugs applied to it.
+      #  return the conn with all html_plugs applied to it.
       # see: https://hexdocs.pm/elixir/List.html#foldl/3
       List.foldl(options.html_plugs, conn, fn f, conn ->
-        if (is_function(f)) do
+        if is_function(f) do
           f.(conn, [])
         else
           conn

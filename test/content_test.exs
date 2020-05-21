@@ -1,25 +1,13 @@
 defmodule ContentTest do
   use ExUnit.Case
   use Plug.Test
-  # @opts AuthPlug.init(%{auth_url: "https://dwylauth.herokuapp.com"})
 
-
-  def dummy(conn, _params) do
-    # IO.inspect(conn.halted, label: "conn.halted")
-    # IO.inspect(conn, label: "conn:9")
-    conn
-    |> assign(:dummy, "hello")
-  end
+  def dummy(conn, _params), do: assign(conn, :dummy, "hello")
 
   # another dummy function for testing call/2 html_plugs
   def assign_accept_header(conn, _params) do
-    # IO.inspect(conn.req_headers, label: "conn.req_headers")
-    # IO.inspect(conn, label: "conn:16")
-    conn
-    |> assign(:accept, Content.get_accept_header(conn))
-    # |> IO.inspect(label: "conn:19")
+    assign(conn, :accept, Content.get_accept_header(conn))
   end
-
 
   test "Plug init function doesn't change params" do
     assert Content.init(%{}) == %{}
@@ -32,7 +20,6 @@ defmodule ContentTest do
       |> Content.call(%{})
 
     # not much else we can assert here, it just returns the conn unmodified.
-    IO.inspect(conn, label: "conn")
     assert conn.status == nil
   end
 
@@ -40,7 +27,7 @@ defmodule ContentTest do
     conn =
       conn(:get, "/")
       |> put_req_header("accept", "html")
-      |> Content.call(%{ html_plugs: [&dummy/2, &assign_accept_header/2] })
+      |> Content.call(%{html_plugs: [&dummy/2, &assign_accept_header/2]})
 
     assert conn.assigns == %{accept: "html", dummy: "hello"}
     assert conn.status == nil
@@ -50,8 +37,7 @@ defmodule ContentTest do
     conn =
       conn(:get, "/")
       |> put_req_header("accept", "html")
-      |> Content.call(%{ html_plugs:
-        [&dummy/2, &assign_accept_header/2, "this is ignored"] })
+      |> Content.call(%{html_plugs: [&dummy/2, &assign_accept_header/2, "this is ignored"]})
 
     assert conn.assigns == %{accept: "html", dummy: "hello"}
     assert conn.status == nil
@@ -66,16 +52,15 @@ defmodule ContentTest do
   def render_html(conn, template, data) do
     str = "<html> #{template} " <> Kernel.inspect(data) <> "</html>"
     Map.put(conn, :resp_body, str)
-    # conn
   end
 
   test "reply/5 should render json if accept header is json" do
     data = %{"hello" => "world"}
+
     conn =
       conn(:get, "/")
       |> put_req_header("accept", "application/json")
       |> Content.reply(&render_html/3, "my_template", &render_json/2, data)
-      # |> IO.inspect(label: "conn:54")
 
     {:ok, json} = Jason.decode(conn.resp_body)
     assert json == data
@@ -89,5 +74,4 @@ defmodule ContentTest do
 
     assert conn.resp_body == "<html> my_template [data: \"data\"]</html>"
   end
-
 end
