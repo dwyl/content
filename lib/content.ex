@@ -31,7 +31,7 @@ defmodule Content do
       #  if accept header not "json" then assume "html" (the default)
       # invoke each function in the list of html_plugs
       # and pass the conn as accumulator through each iteration
-      #  return the conn with all html_plugs applied to it.
+      # return the conn with all html_plugs applied to it.
       # see: https://hexdocs.pm/elixir/List.html#foldl/3
       List.foldl(options.html_plugs, conn, fn f, conn ->
         if is_function(f) do
