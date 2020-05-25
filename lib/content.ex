@@ -21,25 +21,30 @@ defmodule Content do
   `call/2` is invoked to handle each HTTP request which `Content` inspects.
   If the accept header is "html", execute the `html_plugs` for that request.
   If the accept header contains "json" return the `conn` unmodified.
+  If the url terminate with `.json` return the `conn` unmodified.
   """
   def call(conn, options) do
-    if get_accept_header(conn) =~ "json" do
-      #  for json requests return the conn unmodified:
-      #  if we need options.json_plugs in the future, we can add it.
-      conn
-    else
-      #  if accept header not "json" then assume "html" (the default)
-      # invoke each function in the list of html_plugs
-      # and pass the conn as accumulator through each iteration
-      # return the conn with all html_plugs applied to it.
-      # see: https://hexdocs.pm/elixir/List.html#foldl/3
-      List.foldl(options.html_plugs, conn, fn f, conn ->
-        if is_function(f) do
-          f.(conn, [])
-        else
-          conn
-        end
-      end)
+    cond do
+      get_accept_header(conn) =~ "json" ->
+        conn
+
+      url_json?(conn) ->
+        Plug.Conn.put_req_header(conn, "accept", "application/json")
+
+      true ->
+        # if accept header not "json" and url doens't finish with .json
+        # then assume "html" (the default)
+        # invoke each function in the list of html_plugs
+        # and pass the conn as accumulator through each iteration
+        # return the conn with all html_plugs applied to it.
+        # see: https://hexdocs.pm/elixir/List.html#foldl/3
+        List.foldl(options.html_plugs, conn, fn f, conn ->
+          if is_function(f) do
+            f.(conn, [])
+          else
+            conn
+          end
+        end)
     end
   end
 
@@ -58,7 +63,13 @@ defmodule Content do
   end
 
   @doc """
+  `url_json?/1` check if the current url endpoint terminate with .json
+  """
+  def url_json?(conn), do: String.match?(conn.request_path, ~r/\.json$/i)
+
+  @doc """
   `reply/5` gets the "accept" header from req_headers.
+  Verify if url finishes with `.json`.
   Defaults to "text/html" if no header is set.
   The `Content.reply/5` accepts the following 5 argument:
   1. `conn` - the `Plug.Conn` where we get the `req_headers` from.
@@ -75,7 +86,7 @@ defmodule Content do
   5. `data` - the data we want to render as `HTML` or `JSON`.
   """
   def reply(conn, render, template, json, data) do
-    if get_accept_header(conn) =~ "json" do
+    if (get_accept_header(conn) =~ "json") || url_json?(conn) do
       json.(conn, data)
     else
       render.(conn, template, data: data)
