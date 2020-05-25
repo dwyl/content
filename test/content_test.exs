@@ -23,6 +23,15 @@ defmodule ContentTest do
     assert conn.status == nil
   end
 
+  test "invoke call/2 with .json at url's end" do
+    conn =
+      conn(:get, "/.json")
+      |> Content.call(%{})
+
+    assert Content.get_accept_header(conn) == "application/json"
+    assert conn.status == nil
+  end
+
   test "invoke call/2 with accept=html" do
     conn =
       conn(:get, "/")
