@@ -66,10 +66,40 @@ defmodule ContentTest do
     assert json == data
   end
 
+  test "reply/5 should render json if url finishes with .json" do
+    data = %{"hello" => "world"}
+
+    conn =
+      conn(:get, "/.json")
+      |> Content.reply(&render_html/3, "my_template", &render_json/2, data)
+
+    {:ok, json} = Jason.decode(conn.resp_body)
+    assert json == data
+  end
+
+  test "reply/5 should render json if url finishes with .json case insensitive" do
+    data = %{"hello" => "world"}
+
+    conn =
+      conn(:get, "/.JSON")
+      |> Content.reply(&render_html/3, "my_template", &render_json/2, data)
+
+    {:ok, json} = Jason.decode(conn.resp_body)
+    assert json == data
+  end
+
   test "reply/5 should render HTML if accept header is html" do
     conn =
       conn(:get, "/")
       |> put_req_header("accept", "text/html")
+      |> Content.reply(&render_html/3, "my_template", &render_json/2, "data")
+
+    assert conn.resp_body == "<html> my_template [data: \"data\"]</html>"
+  end
+
+  test "reply/5 should render HTML by default and typo on url with .json" do
+    conn =
+      conn(:get, "/.jsson")
       |> Content.reply(&render_html/3, "my_template", &render_json/2, "data")
 
     assert conn.resp_body == "<html> my_template [data: \"data\"]</html>"
