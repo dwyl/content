@@ -29,7 +29,10 @@ defmodule Content do
         conn
 
       url_json?(conn) ->
-        Plug.Conn.put_req_header(conn, "accept", "application/json")
+        conn 
+        |> Plug.Conn.put_req_header("accept", "application/json")
+        |> Map.put(:request_path, Regex.replace(~r/\.json$/i, conn.request_path, ""))
+        
 
       true ->
         # if accept header not "json" and url doens't finish with .json
@@ -86,7 +89,7 @@ defmodule Content do
   5. `data` - the data we want to render as `HTML` or `JSON`.
   """
   def reply(conn, render, template, json, data) do
-    if (get_accept_header(conn) =~ "json") || url_json?(conn) do
+    if (get_accept_header(conn) =~ "json") do
       json.(conn, data)
     else
       render.(conn, template, data: data)

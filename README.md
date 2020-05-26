@@ -83,7 +83,7 @@ Add `content` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:content, "~> 1.0.0"}
+    {:content, "~> 1.2.0"}
   ]
 end
 ```
