@@ -23,11 +23,12 @@ defmodule ContentTest do
     assert conn.status == nil
   end
 
-  test "invoke call/2 with .json at url's end" do
+  test "invoke call/2 with .json at URL's end should strip .json from URL" do
     conn =
       conn(:get, "/.json")
       |> Content.call(%{})
 
+    assert conn.request_path == "/"
     assert Content.get_accept_header(conn) == "application/json"
     assert conn.status == nil
   end
@@ -80,17 +81,19 @@ defmodule ContentTest do
 
     conn =
       conn(:get, "/.json")
+      |> Content.call(%{})
       |> Content.reply(&render_html/3, "my_template", &render_json/2, data)
 
     {:ok, json} = Jason.decode(conn.resp_body)
     assert json == data
   end
 
-  test "reply/5 should render json if url finishes with .json case insensitive" do
+  test "reply/5 should render json if url ends with .json case insensitive" do
     data = %{"hello" => "world"}
 
     conn =
       conn(:get, "/.JSON")
+      |> Content.call(%{})
       |> Content.reply(&render_html/3, "my_template", &render_json/2, data)
 
     {:ok, json} = Jason.decode(conn.resp_body)
