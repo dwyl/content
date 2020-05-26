@@ -29,7 +29,6 @@ defmodule Content do
         conn
 
       url_json?(conn) ->
-        # IO.inspect(conn.request_path, label: "conn.request_path")
         conn 
         |> Plug.Conn.put_req_header("accept", "application/json")
         |> Map.put(:request_path, Regex.replace(~r/\.json$/i, conn.request_path, ""))
