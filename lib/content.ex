@@ -107,26 +107,25 @@ defmodule Content do
   such that a request to "/admin/profile.json" invokes "admin/profile"
   `router` is the Phoenix Router for your app, e.g: `MyApp.Router`
   see: https://github.com/dwyl/content/issues/3#issuecomment-634480231
-  If a matching route is not found, render a 404 error.
   """
   def wildcard_redirect(conn, params, router) do
     route = Enum.filter(router.__routes__(), fn r -> 
       r.path == conn.request_path
     end) |> List.first
     
-    case not is_nil(route) do
-      true ->
-        apply(route.plug, route.plug_opts, [conn, params])
+    # case not is_nil(route) do
+    #   true ->
+    apply(route.plug, route.plug_opts, [conn, params])
 
-      false ->
-        error = """
-        #{conn.request_path} not found.
-        To avoid seeing this error, define an action_fallback controller: 
-         https://hexdocs.pm/phoenix/Phoenix.Controller.html#action_fallback/1 
-        """
-        conn
-        |> Plug.Conn.send_resp(404, error)
-        |> Plug.Conn.halt()
-    end
+    #   false ->
+    #     error = """
+    #     #{conn.request_path} not found.
+    #     To avoid seeing this error, define an action_fallback controller: 
+    #      https://hexdocs.pm/phoenix/Phoenix.Controller.html#action_fallback/1 
+    #     """
+    #     conn
+    #     |> Plug.Conn.send_resp(404, error)
+    #     |> Plug.Conn.halt()
+    # end
   end
 end
