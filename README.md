@@ -83,7 +83,7 @@ Add `content` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:content, "~> 1.2.0"}
+    {:content, "~> 1.3.0"}
   ]
 end
 ```
@@ -221,13 +221,16 @@ The 3 arguments for `wildcard_redirect/3` are:
 + `router` - the router module for your Phoenix App e.g: `MyApp.Router`
 
 For an example of this in action, see:
-[]()
+[`README.md#10-view-json-in-a-web-browser`](https://github.com/dwyl/phoenix-content-negotiation-tutorial/blob/8f34f205427d6cb6eeec79d111531235e9e122fc/README.md#10-view-json-in-a-web-browser)
 
 
 
 ### Error Handling
 
-[Try Catch](https://elixir-lang.org/getting-started/try-catch-and-rescue.html#errors)
+If a route does not exist in your app you will see an error.
+To handle this error you can use a
+[Try Catch](https://elixir-lang.org/getting-started/try-catch-and-rescue.html#errors),
+e.g:
 
 ```elixir
 try do
@@ -241,7 +244,8 @@ rescue
 end
 ```
 
-Error handling using `action_fallback/1`:
+Alternatively, for a more robust approach to 
+Error handling, see `action_fallback/1`:
 https://hexdocs.pm/phoenix/Phoenix.Controller.html#action_fallback/1
 
 <hr />
