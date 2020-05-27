@@ -29,7 +29,7 @@ defmodule Content do
         conn
 
       url_json?(conn) ->
-        path = Regex.replace(~r/\.json$/i, conn.request_path, "")
+        path = redirect_path(conn)
         conn 
         |> Plug.Conn.put_req_header("accept", "application/json")
         |> Map.put(:request_path, path)
@@ -71,6 +71,11 @@ defmodule Content do
   `url_json?/1` check if the current url endpoint terminate with .json
   """
   def url_json?(conn), do: String.match?(conn.request_path, ~r/\.json$/i)
+
+  @doc """
+  `redirect_path/1` returns the `conn.request_path` with the .json removed.
+  """
+  def redirect_path(conn), do: Regex.replace(~r/\.json$/i, conn.request_path, "")
 
   @doc """
   `reply/5` gets the "accept" header from req_headers.
