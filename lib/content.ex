@@ -103,11 +103,13 @@ defmodule Content do
   end
 
   @doc """
-  `redirect_json/3` redirects a "/route.json" request to "/route"
+  `wildcard_redirect/3` redirects a "/route.json" request to "/route"
+  such that a request to "/admin/profile.json" invokes "admin/profile"
   `router` is the Phoenix Router for your app, e.g: `MyApp.Router`
   see: https://github.com/dwyl/content/issues/3#issuecomment-634480231
+  If a matching route is not found, render a 404 error.
   """
-  def redirect_json(conn, params, router) do
+  def wildcard_redirect(conn, params, router) do
     route = Enum.filter(router.__routes__(), fn r -> 
       r.path == conn.request_path
     end) |> List.first
