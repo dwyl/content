@@ -106,26 +106,15 @@ defmodule Content do
   `wildcard_redirect/3` redirects a "/route.json" request to "/route"
   such that a request to "/admin/profile.json" invokes "admin/profile"
   `router` is the Phoenix Router for your app, e.g: `MyApp.Router`
-  see: https://github.com/dwyl/content/issues/3#issuecomment-634480231
+  see: https://github.com/dwyl/content#4-wildcard-routing 
   """
   def wildcard_redirect(conn, params, router) do
     route = Enum.filter(router.__routes__(), fn r -> 
       r.path == conn.request_path
     end) |> List.first
-    
-    # case not is_nil(route) do
-    #   true ->
+    # if no route is found this apply will throw an error
     apply(route.plug, route.plug_opts, [conn, params])
-
-    #   false ->
-    #     error = """
-    #     #{conn.request_path} not found.
-    #     To avoid seeing this error, define an action_fallback controller: 
-    #      https://hexdocs.pm/phoenix/Phoenix.Controller.html#action_fallback/1 
-    #     """
-    #     conn
-    #     |> Plug.Conn.send_resp(404, error)
-    #     |> Plug.Conn.halt()
-    # end
+    # to avoid seeing the error, handle it in your your controller
+    # see the example in the README.md
   end
 end
