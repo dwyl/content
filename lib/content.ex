@@ -29,9 +29,11 @@ defmodule Content do
         conn
 
       url_json?(conn) ->
+        path = Regex.replace(~r/\.json$/i, conn.request_path, "")
         conn 
         |> Plug.Conn.put_req_header("accept", "application/json")
-        |> Map.put(:request_path, Regex.replace(~r/\.json$/i, conn.request_path, ""))
+        |> Map.put(:request_path, path)
+        |> Plug.Conn.put_resp_header("location", path)
         
 
       true ->
