@@ -72,7 +72,7 @@ defmodule PhoenixWildcardRidrectTest do
 
   test "test redirect_json/3 should return 404 if no route" do
     conn = call(Router, :get, "/notfound.json")
-    # assert conn.status == 404
+    assert conn.status == 404
     assert conn.resp_body == "not found"
   end
 

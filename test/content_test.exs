@@ -83,7 +83,6 @@ defmodule ContentTest do
       conn(:get, "/.json")
       |> Content.call(%{})
       |> Content.reply(&render_html/3, "my_template", &render_json/2, data)
-      # |> IO.inspect(label: "conn")
 
     {:ok, json} = Jason.decode(conn.resp_body)
     assert json == data
