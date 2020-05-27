@@ -4,7 +4,7 @@ defmodule Content.MixProject do
   def project do
     [
       app: :content,
-      version: "1.2.4",
+      version: "1.2.5",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -43,14 +43,12 @@ defmodule Content.MixProject do
       # Plug helper functions: github.com/elixir-plug/plug
       {:plug, "~> 1.10", only: [:dev, :test]},
 
+      # Testing Wildcard Route Handler in a Phoenix App:
+      {:jason, "~> 1.2.0", only: [:dev, :test]},
+      {:phoenix, "~> 1.5.3", only: [:dev, :test]},
+
       # Track coverage: github.com/parroty/excoveralls
       {:excoveralls, "~> 0.12.3", only: :test},
-
-      # See: github.com/dwyl/auth_plug_example
-      {:jason, "~> 1.2.0", only: [:dev, :test]},
-
-      # Testing Phoenix Wildcard Route Handler:
-      {:phoenix, "~> 1.5.3", only: [:dev, :test]},
 
       # For publishing Hex.docs:
       {:ex_doc, "~> 0.21.3", only: :dev}
