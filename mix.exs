@@ -48,7 +48,9 @@ defmodule Content.MixProject do
 
       # See: github.com/dwyl/auth_plug_example
       {:jason, "~> 1.2.0", only: [:dev, :test]},
-      # {:phoenix, "~> 1.5.1", only: [:dev, :test]},
+
+      # Testing Phoenix Wildcard Route Handler:
+      {:phoenix, "~> 1.5.3", only: [:dev, :test]},
 
       # For publishing Hex.docs:
       {:ex_doc, "~> 0.21.3", only: :dev}
