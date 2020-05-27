@@ -33,7 +33,7 @@ defmodule Content do
         conn 
         |> Plug.Conn.put_req_header("accept", "application/json")
         |> Map.put(:request_path, path)
-        |> Plug.Conn.put_resp_header("location", path)
+        # |> Plug.Conn.put_resp_header("location", path)
         
 
       true ->
