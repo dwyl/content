@@ -33,7 +33,6 @@ defmodule Content do
         conn 
         |> Plug.Conn.put_req_header("accept", "application/json")
         |> Map.put(:request_path, path)
-        # |> Plug.Conn.put_resp_header("location", path)
         
 
       true ->
@@ -101,5 +100,17 @@ defmodule Content do
     else
       render.(conn, template, data: data)
     end
+  end
+
+  @doc """
+  `redirect_json/3` redirects a "/route.json" request to "/route"
+  `router` is the Phoenix Router for your app, e.g: `MyApp.Router`
+  see: https://github.com/dwyl/content/issues/3#issuecomment-634480231
+  """
+  def redirect_json(conn, params, router) do
+    route = Enum.filter(router.__routes__(), fn r -> 
+      r.path == conn.request_path
+    end) |> List.first
+    apply(route.plug, route.plug_opts, [conn, params])
   end
 end

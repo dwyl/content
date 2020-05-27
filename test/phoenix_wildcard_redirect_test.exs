@@ -48,12 +48,10 @@ defmodule PhoenixWildcardRidrectTest do
     end
   end  
 
-
   test "routes to :index (test that our micro Phoenix works!)" do
     conn = call(Router, :get, "index")
     assert conn.status == 200
     assert conn.resp_body == "index"
-    
   end
 
   test "test redirect_json/3 invokes :index for index.json" do
