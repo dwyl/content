@@ -111,6 +111,20 @@ defmodule Content do
     route = Enum.filter(router.__routes__(), fn r -> 
       r.path == conn.request_path
     end) |> List.first
-    apply(route.plug, route.plug_opts, [conn, params])
+    
+    case not is_nil(route) do
+      true ->
+        apply(route.plug, route.plug_opts, [conn, params])
+
+      false ->
+        error = """
+        #{conn.request_path} not found.
+        To avoid seeing this error, define an action_fallback controller: 
+         https://hexdocs.pm/phoenix/Phoenix.Controller.html#action_fallback/1 
+        """
+        conn
+        |> Plug.Conn.send_resp(404, error)
+        |> Plug.Conn.halt()
+    end
   end
 end
