@@ -109,9 +109,7 @@ defmodule Content do
   see: https://github.com/dwyl/content#4-wildcard-routing 
   """
   def wildcard_redirect(conn, params, router) do
-    route = Enum.filter(router.__routes__(), fn r -> 
-      r.path == conn.request_path
-    end) |> List.first
+    route = Enum.find(router.__routes__(), &(&1.path == conn.request_path))
     # if no route is found this apply will throw an error
     apply(route.plug, route.plug_opts, [conn, params])
     # to avoid seeing the error, handle it in your your controller
