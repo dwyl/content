@@ -29,9 +29,10 @@ defmodule Content do
         conn
 
       url_json?(conn) ->
+        path = redirect_path(conn)
         conn 
         |> Plug.Conn.put_req_header("accept", "application/json")
-        |> Map.put(:request_path, Regex.replace(~r/\.json$/i, conn.request_path, ""))
+        |> Map.put(:request_path, path)
         
 
       true ->
@@ -71,6 +72,11 @@ defmodule Content do
   def url_json?(conn), do: String.match?(conn.request_path, ~r/\.json$/i)
 
   @doc """
+  `redirect_path/1` returns the `conn.request_path` with the .json removed.
+  """
+  def redirect_path(conn), do: Regex.replace(~r/\.json$/i, conn.request_path, "")
+
+  @doc """
   `reply/5` gets the "accept" header from req_headers.
   Verify if url finishes with `.json`.
   Defaults to "text/html" if no header is set.
@@ -94,5 +100,19 @@ defmodule Content do
     else
       render.(conn, template, data: data)
     end
+  end
+
+  @doc """
+  `wildcard_redirect/3` redirects a "/route.json" request to "/route"
+  such that a request to "/admin/profile.json" invokes "admin/profile"
+  `router` is the Phoenix Router for your app, e.g: `MyApp.Router`
+  see: https://github.com/dwyl/content#4-wildcard-routing 
+  """
+  def wildcard_redirect(conn, params, router) do
+    route = Enum.find(router.__routes__(), &(&1.path == conn.request_path))
+    # if no route is found this apply will throw an error
+    apply(route.plug, route.plug_opts, [conn, params])
+    # to avoid seeing the error, handle it in your your controller
+    # see the example in the README.md
   end
 end
