@@ -7,7 +7,7 @@ to _any_ Phoenix App
 so you can render HTML and JSON for the _same_ route.
 
 [![Build Status](https://img.shields.io/travis/dwyl/content/master.svg?style=flat-square)](https://travis-ci.org/dwyl/content)
-[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/content/master.svg?style=flat-square)](http://codecov.io/github/dwyl/content?branch=master)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/content/master.svg?style=flat-square)](https://codecov.io/github/dwyl/content?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/content/issues)
 [![HitCount](https://hits.dwyl.com/dwyl/content.svg?style=flat-square&show=unique)](https://hits.dwyl.com/dwyl/content)
 
