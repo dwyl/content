@@ -45,7 +45,7 @@ defmodule Content.MixProject do
 
       # Testing Wildcard Route Handler in a Phoenix App:
       {:jason, "~> 1.2.0", only: [:dev, :test]},
-      {:phoenix, "~> 1.5.3", only: [:dev, :test]},
+      {:phoenix, "~> 1.6.7", only: [:dev, :test]},
 
       # Track coverage: github.com/parroty/excoveralls
       {:excoveralls, "~> 0.12.3", only: :test},
