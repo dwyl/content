@@ -6,7 +6,7 @@
 to _any_ Phoenix App
 so you can render HTML and JSON for the _same_ route.
 
-[![Build Status](https://img.shields.io/travis/dwyl/content/master.svg?style=flat-square)](https://travis-ci.org/dwyl/content)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dwyl/hits/Elixir%20CI?label=build&style=flat-square)](https://github.com/dwyl/hits/actions/workflows/ci.yml)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/content/master.svg?style=flat-square)](https://codecov.io/github/dwyl/content?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/content/issues)
 [![HitCount](https://hits.dwyl.com/dwyl/content.svg?style=flat-square&show=unique)](https://hits.dwyl.com/dwyl/content)
@@ -194,12 +194,12 @@ end
 
 If you want to allow people to view the `JSON` representation
 of _any_ route in your application in a Web Browser
-without having to _manually_ set the Accept header 
+without having to _manually_ set the Accept header
 to `application/json`, there's a handy function for you:
 `wildcard_redirect/3`
 
-To use it, simply create a 
-[wildcard](https://stackoverflow.com/questions/32189311/catch-all-wildcard-route) 
+To use it, simply create a
+[wildcard](https://stackoverflow.com/questions/32189311/catch-all-wildcard-route)
 route in your `router.ex` file.
 e.g:
 
@@ -244,7 +244,7 @@ rescue
 end
 ```
 
-Alternatively, for a more robust approach to 
+Alternatively, for a more robust approach to
 Error handling, see `action_fallback/1`:
 https://hexdocs.pm/phoenix/Phoenix.Controller.html#action_fallback/1
 
