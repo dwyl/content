@@ -124,6 +124,27 @@ pipeline :any do
 end
 ```
 
+Don't forget to change the pipeline you just changed inside the scopes.
+As such, you should change according to the following:
+
+*Before*:
+```elixir
+scope "/", AppWeb do
+  pipe_through(:browser)
+
+  get("/", PageController, :index)
+end
+```
+
+*After*:
+```elixir
+scope "/", AppWeb do
+  pipe_through(:any)
+
+  get("/", PageController, :index)
+end
+```
+
 Pass the plugs you want to run for `html`
 as `html_plugs` (_in the order you want to execute them_).
 
