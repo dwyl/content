@@ -32,7 +32,7 @@ we guarantee that _everyone_ has
 access to their data in the most convenient way.
 
 Returning an `HTML` view for people using the App in a Web Browser
-and return `JSON` for people requesting the _same_ endpoint
+and returning `JSON` for people requesting the _same_ endpoint
 from a script (_or a totally independent front-end_)
 we guarantee that all features of our Web App
 are automatically available in the API.
@@ -49,7 +49,7 @@ We are a small team
 that has to do (_a lot_) more with fewer resources!
 
 If you are new to content negotiation in _general_
-or _how_ to implment it in Phoenix from scratch,
+or _how_ to implement it in Phoenix from scratch,
 please see:
 [dwyl/phoenix-content-negotiation-tutorial](https://github.com/dwyl/phoenix-content-negotiation-tutorial)
 

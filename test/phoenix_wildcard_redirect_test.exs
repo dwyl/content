@@ -7,11 +7,11 @@ defmodule PhoenixWildcardRidrectTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
-  # Borrowed from: https://git.io/JfrZt
+  #  Borrowed from: https://git.io/JfrZt
   def call(router, verb, path, params \\ nil, script_name \\ []) do
     verb
     |> conn(path, params)
-    |> Plug.Conn.fetch_query_params
+    |> Plug.Conn.fetch_query_params()
     |> Map.put(:script_name, script_name)
     |> router.call(router.init([]))
   end
@@ -20,8 +20,8 @@ defmodule PhoenixWildcardRidrectTest do
     use Phoenix.Controller
 
     def index(conn, _params), do: text(conn, "index")
-    
-    def hello(conn, _params) do 
+
+    def hello(conn, _params) do
       json(conn, %{"hello" => "world"})
     end
 
@@ -29,7 +29,7 @@ defmodule PhoenixWildcardRidrectTest do
       try do
         Content.wildcard_redirect(conn, params, PhoenixWildcardRidrectTest.Router)
       rescue
-        UndefinedFunctionError -> 
+        UndefinedFunctionError ->
           conn
           |> Plug.Conn.send_resp(404, "not found")
           |> Plug.Conn.halt()
@@ -41,29 +41,29 @@ defmodule PhoenixWildcardRidrectTest do
     use Phoenix.Router
 
     pipeline :any do
-      plug :accepts, ~w(html json)
-      plug Content, %{html_plugs: []}
+      plug(:accepts, ~w(html json))
+      plug(Content, %{html_plugs: []})
     end
 
     scope "/" do
-      pipe_through :any
+      pipe_through(:any)
 
-      get "/index", Controller, :index
-      get "/hello", Controller, :hello
-      get "/*pokemon", Controller, :wildcard_redirect
-
+      get("/index", Controller, :index)
+      get("/hello", Controller, :hello)
+      get("/*pokemon", Controller, :wildcard_redirect)
     end
-  end  
+  end
 
   test "routes to :index (test that our micro Phoenix works!)" do
-    conn = call(Router, :get, "index")
+    conn = call(Router, :get, "/index")
     assert conn.status == 200
     assert conn.resp_body == "index"
   end
 
   test "test redirect_json/3 invokes :index for index.json" do
     data = %{"hello" => "world"}
-    conn = call(Router, :get, "/hello.json") # should get caught by pokemon
+    #  should get caught by pokemon
+    conn = call(Router, :get, "/hello.json")
 
     assert conn.status == 200
     {:ok, json} = Jason.decode(conn.resp_body)
@@ -75,5 +75,4 @@ defmodule PhoenixWildcardRidrectTest do
     assert conn.status == 404
     assert conn.resp_body == "not found"
   end
-
 end

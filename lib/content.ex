@@ -30,10 +30,10 @@ defmodule Content do
 
       url_json?(conn) ->
         path = redirect_path(conn)
-        conn 
+
+        conn
         |> Plug.Conn.put_req_header("accept", "application/json")
         |> Map.put(:request_path, path)
-        
 
       true ->
         # if accept header not "json" and url doens't finish with .json
@@ -95,7 +95,7 @@ defmodule Content do
   5. `data` - the data we want to render as `HTML` or `JSON`.
   """
   def reply(conn, render, template, json, data) do
-    if (get_accept_header(conn) =~ "json") do
+    if get_accept_header(conn) =~ "json" do
       json.(conn, data)
     else
       render.(conn, template, data: data)
@@ -110,8 +110,13 @@ defmodule Content do
   """
   def wildcard_redirect(conn, params, router) do
     route = Enum.find(router.__routes__(), &(&1.path == conn.request_path))
-    # if no route is found this apply will throw an error
-    apply(route.plug, route.plug_opts, [conn, params])
+    #  if no route is found this apply will throw an error
+    if is_nil(route) do
+      raise(UndefinedFunctionError)
+    else
+      apply(route.plug, route.plug_opts, [conn, params])
+    end
+
     # to avoid seeing the error, handle it in your your controller
     # see the example in the README.md
   end
