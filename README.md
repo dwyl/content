@@ -6,7 +6,7 @@
 to _any_ Phoenix App
 so you can render HTML and JSON for the _same_ route.
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dwyl/hits/Elixir%20CI?label=build&style=flat-square)](https://github.com/dwyl/hits/actions/workflows/ci.yml)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/content/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/content/master.svg?style=flat-square)](https://codecov.io/github/dwyl/content?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/content/issues)
 [![HitCount](https://hits.dwyl.com/dwyl/content.svg?style=flat-square&show=unique)](https://hits.dwyl.com/dwyl/content)
